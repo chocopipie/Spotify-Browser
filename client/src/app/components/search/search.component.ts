@@ -29,7 +29,8 @@ export class SearchComponent implements OnInit {
     this.spotifyService.searchFor(this.searchCategory, this.searchString).then(data => {
       if (data){
         console.log("Matched data.");
-        this.resources = data
+        this.resources = data;
+        this.searchString = ''
       } else {
         console.log("No matched data.")
       }
