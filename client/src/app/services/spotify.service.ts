@@ -22,7 +22,8 @@ export class SpotifyService {
     //Note: toPromise() is a deprecated function that will be removed in the future.
     //It's possible to do the assignment using lastValueFrom, but we recommend using toPromise() for now as we haven't
     //yet talked about Observables. https://indepth.dev/posts/1287/rxjs-heads-up-topromise-is-being-deprecated
-    return Promise.resolve();
+    let promise = this.http.get(this.expressBaseUrl+endpoint).toPromise();
+    return Promise.resolve(promise);
   }
 
   aboutMe():Promise<ProfileData> {
@@ -35,9 +36,49 @@ export class SpotifyService {
   searchFor(category:string, resource:string):Promise<ResourceData[]> {
     //TODO: identify the search endpoint in the express webserver (routes/index.js) and send the request to express.
     //Make sure you're encoding the resource with encodeURIComponent().
+    // ref: https://www.freecodecamp.org/news/javascript-url-encode-example-how-to-use-encodeuricomponent-and-encodeuri/#:~:text=encodeURIComponent%20should%20be%20used%20to,URI%20or%20an%20existing%20URL.
     //Depending on the category (artist, track, album), return an array of that type of data.
     //JavaScript's "map" function might be useful for this, but there are other ways of building the array.
-    return null as any;
+    let resourcesArray:ResourceData[] = [];
+    return this.sendRequestToExpress(`/search/${category}/${encodeURIComponent(resource)}`).then(data => {
+      if (data){
+        console.log("data received");
+      } else {
+        console.log("no data received");
+      }
+
+      if (category === 'artist') {
+        let resourcesArray:ArtistData[];
+        resourcesArray = data.artists.items.map((artist) => new ArtistData(artist))
+        if (resourcesArray) {
+          console.log("Artists found")
+        } else {
+          console.log("No artists found.")
+        }
+        return resourcesArray;
+      } else if (category === 'album') {
+        let resourcesArray:AlbumData[];
+        resourcesArray = data.albums.items.map((album) => new AlbumData(album))
+        if (resourcesArray) {
+          console.log("Albums found")
+        } else {
+          console.log("No albums found.")
+        }
+        //console.log(resourcesArray)
+        return resourcesArray;
+      } else if (category === 'track') {
+        let resourcesArray:TrackData[];
+        resourcesArray = data.tracks.items.map((track) => new TrackData(track))
+        if (resourcesArray) {
+          console.log("Tracks found")
+        } else {
+          console.log("No tracks found.")
+        }
+        //console.log(resourcesArray)
+        return resourcesArray;
+      }
+      return resourcesArray;
+    });
   }
 
   getArtist(artistId:string):Promise<ArtistData> {
