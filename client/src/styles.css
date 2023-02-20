@@ -1,8 +1,5 @@
 /* You can add global styles to this file, and also import other style files */
-:root {
-	--bs-gray-dark: #3d405b;
-	--bs-orange: #e09f3e
-}
+
 body {
 	background-color: var(--bs-gray-dark);
 	color: var(--bs-light);
@@ -10,12 +7,10 @@ body {
 }
 
 h1 {
-	color: #f2e9e4;
 	font-weight: 900;
 }
 
 h2, h3 {
-	color: #f2e9e4;
 	font-weight: 700;
 }
 

@@ -17,6 +17,6 @@ export class TrackFeature {
 	}
 
 	get color() {
-		return chroma.mix('#735d78', '#f7d1cd', this.percent, 'hsl').hex();
+		return chroma.mix('red', 'green', this.percent, 'hsl').hex();
 	}
 }
