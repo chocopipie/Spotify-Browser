@@ -7,7 +7,7 @@ import { SpotifyService } from 'src/app/services/spotify.service';
 })
 export class AboutComponent implements OnInit {
   name:string = null;
-  profile_pic:string = "../../../assets/unknown.jpg";
+  profile_pic:string = "../../../assets/avatar.png";
   profile_link:string = null;
 
   //TODO: inject the Spotify service
