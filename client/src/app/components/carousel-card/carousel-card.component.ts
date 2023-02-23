@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ResourceData } from '../../data/resource-data';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-carousel-card',
@@ -14,7 +15,7 @@ export class CarouselCardComponent implements OnInit {
   category: string;
   @Input() resource:ResourceData;
 
-  constructor() { }
+  constructor(private router:Router) { }
 
   ngOnInit() {
     this.url = this.resource.url;
